@@ -123,6 +123,13 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
+!.env.example
+/data/
+/backup/
+/backups/
+*.rdb
+*.aof
 .venv
 env/
 venv/

@@ -1,10 +1,40 @@
-version: '3.8'
-
 services:
   redis:
-    image: redis:latest
-    command: redis-server --requirepass RedisSenha
+    image: redis:8.4.7-trixie
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Defina REDIS_PASSWORD no .env}
+    command:
+      - sh
+      - -c
+      - exec redis-server /usr/local/etc/redis/redis.conf --requirepass "$$REDIS_PASSWORD"
     ports:
-      - "6379:6379"
+      - "127.0.0.1:${REDIS_PORT:?Defina REDIS_PORT no .env}:6379"
     volumes:
-      - ./data:/data  
+      - redis-data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", 'test "$$(REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli --raw ping)" = "PONG"']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  redisinsight:
+    image: redis/redisinsight:3.8.0
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5540/api/health/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    ports:
+      - "127.0.0.1:${REDIS_INSIGHT_PORT:-5540}:5540"
+    volumes:
+      - redisinsight-data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+
+volumes:
+  redis-data:
+  redisinsight-data:

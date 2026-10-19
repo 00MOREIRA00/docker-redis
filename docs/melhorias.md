@@ -12,20 +12,20 @@ Os itens abaixo são propostas pendentes, salvo os marcados como concluídos.
 
 - [x] Definir o escopo independente e o caso de negócio próprio.
 - [x] Criar o roadmap em `docs/melhorias.md`.
-- [ ] Corrigir a divergência entre a senha apresentada no README e a usada no Compose e no Python.
-- [ ] Centralizar configurações em variáveis de ambiente e fornecer `.env.example`.
-- [ ] Conferir se `.env`, dados persistidos e backups estão ignorados pelo Git.
-- [ ] Declarar as dependências Python e documentar instalação e execução do exemplo.
-- [ ] Configurar o cliente Python por ambiente, com timeout e tratamento de erros de conexão e autenticação.
+- [x] Corrigir a divergência entre a senha apresentada no README e a usada no Compose e no Python.
+- [x] Centralizar configurações em variáveis de ambiente e fornecer `.env.example`.
+- [x] Conferir se `.env`, dados persistidos e backups estão ignorados pelo Git.
+- [x] Declarar as dependências Python e documentar instalação e execução do exemplo.
+- [x] Configurar o cliente Python por ambiente, com timeout e tratamento de erros de conexão e autenticação.
 
 ## 2. Infraestrutura local
 
-- [ ] Fixar uma versão da imagem Redis em vez de usar `latest`.
-- [ ] Adicionar healthcheck autenticado e documentar como verificar a disponibilidade.
-- [ ] Adotar volume nomeado e explicar como preservar ou remover os dados.
-- [ ] Restringir a porta publicada ao acesso local por padrão.
-- [ ] Organizar opções do servidor em `redis/redis.conf`, definindo como fornecer credenciais sem versionar segredos.
-- [ ] Incluir Redis Insight no Compose e documentar a conexão.
+- [x] Fixar uma versão da imagem Redis em vez de usar `latest`.
+- [x] Adicionar healthcheck autenticado e documentar como verificar a disponibilidade.
+- [x] Adotar volume nomeado e explicar como preservar ou remover os dados.
+- [x] Restringir a porta publicada ao acesso local por padrão.
+- [x] Organizar opções do servidor em `redis/redis.conf`, definindo como fornecer credenciais sem versionar segredos.
+- [x] Incluir Redis Insight no Compose e documentar a conexão.
 
 Critério de conclusão: iniciar o ambiente com as instruções do próprio projeto e executar uma escrita e leitura autenticadas.
 
