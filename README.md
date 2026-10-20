@@ -86,6 +86,17 @@ A pasta local `data/` usada anteriormente deixa de ser montada. Seu conteúdo co
 
 ## Personalização
 
+### Catálogo de artigos
+
+O arquivo [`data/catalogo.json`](data/catalogo.json) é a fonte local de dados do Clube de Leituras. Ele contém as listas `categorias` e `artigos`. Cada artigo tem um `id` único e usa `categoria_id` para apontar para o `id` de uma categoria. Para adicionar um artigo, inclua um objeto em `artigos` com `id`, `categoria_id`, `titulo`, `resumo`, `autor` e `publicado_em` (data no formato `AAAA-MM-DD`). O `main.py` ainda não lê esse catálogo; o script de carga abaixo envia uma cópia ao Redis.
+
+Confira a sintaxe e leia os dados sem instalar dependências:
+
+```bash
+python3 -m json.tool data/catalogo.json > /dev/null
+python3 -c 'import json; from pathlib import Path; catalogo = json.loads(Path("data/catalogo.json").read_text(encoding="utf-8")); print(len(catalogo["categorias"]), "categorias,", len(catalogo["artigos"]), "artigos")'
+```
+
 Edite o `.env` para personalizar a conexão. Após alterar a senha ou a porta, execute `docker compose up -d` novamente para recriar o serviço com a nova configuração. Variáveis já exportadas no ambiente têm prioridade sobre o `.env`, tanto no Compose quanto no Python.
 
 Para executar o exemplo Python, com Python 3 instalado:
@@ -101,11 +112,28 @@ O script carrega o `.env` da raiz do projeto e deve imprimir `Valor inserido: Ba
 
 As dependências estão declaradas em `requirements.txt`: `redis` é o cliente Redis e `python-dotenv` carrega o `.env`. Inicie o Redis com `docker compose up -d` antes de executar o exemplo.
 
+### Carregar o catálogo no Redis
+
+Com o Redis iniciado e as dependências instaladas no ambiente Python, execute:
+
+```bash
+python scripts/carregar_catalogo.py
+```
+
+O script lê `data/catalogo.json`, valida os IDs, as categorias e as datas, e grava cada item como JSON em uma chave com prefixo `lab:clube:catalogo:`. Ele mantém os conjuntos `lab:clube:catalogo:artigos` e `lab:clube:catalogo:categorias` com os IDs carregados. Você pode executá-lo novamente após editar o arquivo: ele substitui as chaves da carga anterior e remove os itens que saíram do catálogo, sem usar `FLUSHDB` ou apagar outras chaves. Os dados carregados não têm TTL; o cache com expiração será uma etapa separada.
+
+Confira um artigo e os IDs no Redis:
+
+```bash
+docker compose exec redis sh -c 'REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli --raw GET lab:clube:catalogo:artigo:primeiros-passos-com-cache'
+docker compose exec redis sh -c 'REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli --raw SMEMBERS lab:clube:catalogo:artigos'
+```
+
 `REDIS_TIMEOUT` define, em segundos, o limite de conexão e de cada operação do cliente Python (padrão: `5`; deve ser positivo e finito). O cliente não repete automaticamente operações após falhas. Em caso de configuração inválida, falha de autenticação, conexão ou timeout, o script imprime uma mensagem em stderr e termina com código `1`; em caso de sucesso, termina com código `0`.
 
 Se houver falha de conexão, confira `REDIS_HOST`, `REDIS_PORT` e se o contêiner está em execução. Para falhas de autenticação, confira `REDIS_PASSWORD` e recrie o serviço após alterar a senha. Para timeout, verifique a disponibilidade do servidor e ajuste `REDIS_TIMEOUT` se necessário.
 
-O `.env` e suas variantes locais, os dados em `data/`, os diretórios `backup/` e `backups/` e arquivos Redis `*.rdb` e `*.aof` são ignorados pelo Git. Guarde backups nesses diretórios. O `.env.example` é versionado apenas como modelo.
+O `.env` e suas variantes locais, os arquivos em `data/` exceto `catalogo.json`, os diretórios `backup/` e `backups/` e arquivos Redis `*.rdb` e `*.aof` são ignorados pelo Git. Guarde backups nesses diretórios. O `.env.example` é versionado apenas como modelo.
 
 ## Avisos
 

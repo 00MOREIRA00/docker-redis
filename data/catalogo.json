@@ -1,0 +1,69 @@
+{
+  "categorias": [
+    {
+      "id": "tecnologia",
+      "nome": "Tecnologia",
+      "descricao": "Ferramentas e ideias para o dia a dia digital."
+    },
+    {
+      "id": "ciencia",
+      "nome": "Ciência",
+      "descricao": "Descobertas e perguntas sobre o mundo."
+    },
+    {
+      "id": "cultura",
+      "nome": "Cultura",
+      "descricao": "Livros, arte e histórias para compartilhar."
+    }
+  ],
+  "artigos": [
+    {
+      "id": "primeiros-passos-com-cache",
+      "categoria_id": "tecnologia",
+      "titulo": "Primeiros passos com cache",
+      "resumo": "Como guardar respostas frequentes e reduzir consultas repetidas.",
+      "autor": "Ana Lima",
+      "publicado_em": "2026-01-12"
+    },
+    {
+      "id": "senhas-e-autenticacao",
+      "categoria_id": "tecnologia",
+      "titulo": "Senhas e autenticação no cotidiano",
+      "resumo": "Cuidados simples para proteger contas e aplicações.",
+      "autor": "Bruno Reis",
+      "publicado_em": "2026-02-03"
+    },
+    {
+      "id": "o-caminho-da-agua",
+      "categoria_id": "ciencia",
+      "titulo": "O caminho da água na cidade",
+      "resumo": "Da chuva ao abastecimento: uma viagem pelo ciclo urbano da água.",
+      "autor": "Carla Nunes",
+      "publicado_em": "2026-02-18"
+    },
+    {
+      "id": "observando-o-ceu",
+      "categoria_id": "ciencia",
+      "titulo": "Observando o céu sem telescópio",
+      "resumo": "Um guia de observação das estrelas para noites comuns.",
+      "autor": "Diego Alves",
+      "publicado_em": "2026-03-07"
+    },
+    {
+      "id": "clubes-de-leitura",
+      "categoria_id": "cultura",
+      "titulo": "Como organizar um clube de leitura",
+      "resumo": "Escolha de livros, encontros e conversas que acolhem leitores.",
+      "autor": "Elisa Rocha",
+      "publicado_em": "2026-03-21"
+    },
+    {
+      "id": "bibliotecas-de-bairro",
+      "categoria_id": "cultura",
+      "titulo": "Bibliotecas de bairro e suas histórias",
+      "resumo": "Espaços de leitura que aproximam pessoas e comunidades.",
+      "autor": "Felipe Costa",
+      "publicado_em": "2026-04-09"
+    }
+  ]
+}

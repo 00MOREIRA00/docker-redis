@@ -125,7 +125,8 @@ celerybeat.pid
 .env
 .env.*
 !.env.example
-/data/
+/data/*
+!/data/catalogo.json
 /backup/
 /backups/
 *.rdb

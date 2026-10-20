@@ -31,8 +31,8 @@ Critério de conclusão: iniciar o ambiente com as instruções do próprio proj
 
 ## 3. Dados e cache do Clube de Leituras
 
-- [ ] Criar catálogo JSON local com artigos e categorias fictícios.
-- [ ] Criar script de carga reproduzível com prefixo de chaves próprio do laboratório.
+- [x] Criar catálogo JSON local com artigos e categorias fictícios.
+- [x] Criar script de carga reproduzível com prefixo de chaves próprio do laboratório.
 - [ ] Implementar cache-aside: consultar Redis, carregar o JSON em caso de miss e armazenar o resultado com TTL.
 - [ ] Demonstrar hit, miss, expiração e invalidação após alteração do catálogo.
 - [ ] Comparar consultas com e sem cache, explicitando as condições da medição.
